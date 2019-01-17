@@ -1,16 +1,12 @@
-#!/usr/bin/env python
-from time import sleep
 from networktables import NetworkTables
-NetworkTables.initialize(server='10.29.84.2')
 
 
-def connectionListener(connected, info):
-    print(info, "; Connected=%s" % connected)
+class Client:
+    def __init__(self, ip, tablename="vision"):
+        NetworkTables.initialize(server=ip)
+        NetworkTables.addConnectionListener(
+            self._connectionListener, immediateNotify=True)
+        self.table = NetworkTables.getTable(tablename)
 
-
-NetworkTables.addConnectionListener(connectionListener, immediateNotify=True)
-table = NetworkTables.getTable("vision")
-
-while True:
-    table.putNumberArray("VISION DATA", 2984)
-    sleep(1)
+    def _connectionListener(self, connected, info):
+        print(info, "; Connected=%s" % connected)
