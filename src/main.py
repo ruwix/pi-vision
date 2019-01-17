@@ -2,8 +2,9 @@
 from client import Client
 from vision import Vision
 client = Client("10.29.84.2")
-vision = Vision(filename="input3.jpg")
+vision = Vision()
 vision.update()
+
 while True:
     vision.update()
     movement = vision.getMovement()

@@ -52,14 +52,14 @@ class Vision:
     def updateMovement(self):
         length = len(self.boxes)
         if length != 2:
-            print("ERROR: Invalid number of bounding boxes ({})".format(length))
-        else:
-            x = (self.boxes[1].offset[0] + self.boxes[0].offset[0])/2
-            y = (self.boxes[1].offset[1] + self.boxes[0].offset[1])/2
-            x_thresh = 0.05
-            x_error = x - 0.5
-            if abs(x_error) > x_thresh:
-                self.movement[0] = x_error * 2
+            print("WARNING: More than 2 boxes, using the first 2")
+
+        x = (self.boxes[1].offset[0] + self.boxes[0].offset[0])/2
+        y = (self.boxes[1].offset[1] + self.boxes[0].offset[1])/2
+        x_thresh = 0.05
+        x_error = x - 0.5
+        if abs(x_error) > x_thresh:
+            self.movement[0] = x_error * 2
 
     def update(self):
         self.boxes = []
